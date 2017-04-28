@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>select</title>
+
+    <link rel="icon" href="favicon.ico">
+
+    <script src="bower_components/jquery/dist/jquery.min.js"></script>
+    <script src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+    <script src="public/bower_components/dropkick/build/js/dropkick.min.js"></script>
+
+    <script src="js/main.js"></script>
+     <link rel="stylesheet" href="public/bower_components/dropkick/build/css/dropkick.css">
+
+     <style>
+
+     body {
+            z-index: 1;
+    font-family: "Rotis Sans Serif W01","Helvetica Neue",Helvetica,Arial,sans-serif;
+    font-size: 14px;
+    line-height: 1.4;
+     }
+
+     .dk-optgroup-label {
+        padding-top:4px;
+     }
+
+      .dk-optgroup-label::after  {
+        content: ">";
+        float:right;
+        }
+
+
+        .dk-optgroup-options {
+            display :none;
+            position:absolute;
+            left:100%;
+            border:1px solid #3297fd;
+            border-radius:0.4em 0.4em;
+            top:-1px;
+        }
+
+        .dk-group-selected ul.dk-optgroup-options {
+            display:block;     
+        }
+
+        .dk-optgroup-options .dk-option {
+            white-space: nowrap;
+        }
+
+        .dk-select-options {
+            overflow:visible !important;
+            max-height: none !important;
+        }
+
+        .dk-optgroup {
+            position:relative;
+            padding-top:0px;
+            padding-bottom:0px;
+        }
+    </style>
+
+    <script>
+        $(function() {
+            var dkAttrs = {
+                open: function() {
+                    $('.dk-option-selected').parents('.dk-optgroup').addClass('dk-group-selected')
+                    $('.dk-option-selected').parents('.dk-optgroup').find('.dk-optgroup-label').addClass('dk-option-highlight');
+                    $('.dk-optgroup').not('.dk-group-selected').find('.dk-optgroup-options').css('display', 'none');
+                }, 
+                change: function() {
+                    $('.dk-group-selected').removeClass('dk-group-selected');
+                    $('.dk-optgroup-label.dk-option-highlight').removeClass('dk-option-highlight');
+                },
+                 initialize: function() {
+                        $(this.data.elem).find(".dk-optgroup-label, .dk-select-options > .dk-option").hover(function(event) {
+                            var _parentClassName = $(event.currentTarget).parent()[0].className;
+
+                            if(_parentClassName.indexOf('dk-optgroup-options'))  {
+                                $('.dk-select-options > .dk-option').removeClass('dk-option-highlight');
+                                $('.dk-optgroup-label').removeClass('dk-option-highlight');
+                            }
+                            $(event.currentTarget).addClass('dk-option-highlight');
+                        });
+
+                              $(this.data.elem).find(".dk-optgroup-label").click(function(event) {
+                $('.dk-optgroup-options').css('display', 'none');
+                $(this).next('.dk-optgroup-options').css('display', 'block');
+                event.stopPropagation();
+            });
+
+
+                 }       
+             };
+
+            var select = new Dropkick("#opt_group", dkAttrs);
+            var select = new Dropkick("#opt_group2", dkAttrs);
+
+           /**/
+
+
+      
+        });
+    </script>
+</head>
+    <body>
+        <div class="container">
+            <select id="opt_group" class="asb">
+              <option selected class="hidden-option">Choose One</option>
+              <option>Punkt 1</option>
+              <option>Punkt 2</option>
+              <option>Punkt 3</option>
+              <option>Punkt 4</option>
+              <optgroup label="Group 1">
+                <option>Option 1.1</option>
+              </optgroup>
+              <optgroup label="Group 2">
+                <option>Option 2.1</option>
+                <option>Option 2.2</option>
+              </optgroup>
+              <optgroup label="Group 3" >
+                <option disabled>Option 3.1</option>
+                <option>Option 3.2</option>
+                <option>Option 3.3</option>
+              </optgroup>
+            </select>
+
+               <select id="opt_group2" class="asb">
+              <option selected class="hidden-option">Choose One</option>
+              <option>Punkt 1</option>
+              <option>Punkt 2</option>
+              <option>Punkt 3</option>
+              <option>Punkt 4</option>
+              <optgroup label="Group 1">
+                <option>Option 1.1</option>
+              </optgroup>
+              <optgroup label="Group 2">
+                <option>Option 2.1</option>
+                <option>Option 2.2</option>
+              </optgroup>
+              <optgroup label="Group 3" disabled>
+                <option>Option 3.1</option>
+                <option>Option 3.2</option>
+                <option>Option 3.3</option>
+              </optgroup>
+            </select>
+        </div>
+
+        <div id="result"></div>
+    </body>
+</html>
